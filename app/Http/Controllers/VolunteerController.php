@@ -17,6 +17,9 @@ class VolunteerController extends Controller
 
     public function create(Campaign $campaign)
     {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('campaigns.show', $campaign)->withErrors(['relawan' => 'Akun admin tidak bisa mendaftar sebagai relawan. Gunakan akun donatur.']);
+        }
         if (!$campaign->isOpen()) {
             return redirect()->route('campaigns.show', $campaign)->withErrors(['relawan' => 'Kampanye ini sudah ditutup / melewati tenggat.']);
         }
@@ -25,6 +28,9 @@ class VolunteerController extends Controller
 
     public function store(StoreVolunteerRequest $request)
     {
+        if (auth()->user()->role === 'admin') {
+            return back()->withErrors(['relawan' => 'Akun admin tidak bisa mendaftar sebagai relawan. Gunakan akun donatur.']);
+        }
         $campaign = Campaign::findOrFail($request->campaign_id);
         if (!$campaign->isOpen()) {
             return back()->withErrors(['relawan' => 'Kampanye ini sudah ditutup / melewati tenggat.']);
