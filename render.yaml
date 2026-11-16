@@ -1,0 +1,44 @@
+# Render Blueprint — deploy dengan "New > Blueprint" lalu pilih repo ini.
+# Database TIDAK dibuat di Render: tetap memakai Neon PostgreSQL eksternal
+# lewat DATABASE_URL. Nilai rahasia (APP_KEY, DATABASE_URL) diisi manual
+# di dashboard Render (sync: false) — jangan pernah ditulis di file ini.
+services:
+  - type: web
+    name: donasi-relawan
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: Donasi Relawan Komunitas
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      # Sesuaikan dengan URL Render yang sebenarnya setelah deploy pertama,
+      # mis. https://donasi-relawan.onrender.com
+      - key: APP_URL
+        value: https://donasi-relawan.onrender.com
+      - key: APP_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_LIFETIME
+        value: "120"
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: SESSION_SAME_SITE
+        value: lax
+      - key: SESSION_HTTP_ONLY
+        value: "true"
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: LOG_CHANNEL
+        value: stack
