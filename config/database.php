@@ -28,6 +28,8 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => $query['sslmode'] ?? 'require',
+	    'options' => [\PDO::ATTR_EMULATE_PREPARES => true],
+
         ],
         'sqlite' => [
             'driver' => 'sqlite',
