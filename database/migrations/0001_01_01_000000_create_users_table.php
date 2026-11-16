@@ -15,7 +15,8 @@ return new class extends Migration {
             $table->string('password'); // hash bcrypt — tidak pernah plaintext
             $table->string('role', 20)->default('user'); // admin | user (FR-AUTH-06)
             $table->string('phone', 20)->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->tinyInteger('is_active')->default(1);
+
             $table->rememberToken();
             $table->timestamps();
         });

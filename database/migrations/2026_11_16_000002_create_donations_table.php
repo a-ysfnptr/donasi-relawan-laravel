@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->bigInteger('amount');
             $table->string('method', 30);
             $table->string('proof_file')->nullable();
-            $table->boolean('is_anonymous')->default(false);
+            $table->tinyInteger('is_anonymous')->default(0);
             $table->text('message')->nullable();
             $table->string('status', 20)->default('menunggu'); // menunggu|terverifikasi|ditolak|dibatalkan
             $table->foreignId('verified_by')->nullable()->constrained('users')->nullOnDelete();
